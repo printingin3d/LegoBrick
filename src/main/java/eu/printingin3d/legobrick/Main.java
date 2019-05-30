@@ -14,7 +14,14 @@ public class Main {
 	 * @throws IllegalValueException 
 	 */
 	public static void main(String[] args) throws IllegalValueException, IOException {
-		LegoBrick lego = new LegoBrick(2, 4);
+		LegoBrick lego = new LegoBrick(10, 2);
+/*		Abstract3dModel lego = new GenericLegoBrick()
+				.addRow("111")
+				.addRow("111")
+				.addRow("101")
+				.addRow("111")
+				.addRow("010")
+				.build();*/
 		new SaveScadFiles(new File("C:/temp")).
 				addModel("lego_brick.scad", lego).
 				saveScadFiles();

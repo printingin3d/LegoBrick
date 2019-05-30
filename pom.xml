@@ -10,7 +10,7 @@
 	<url>http://www.printingin3d.eu/javascad</url>
 
 	<properties>
-		<targetJdk>1.7</targetJdk>
+		<targetJdk>1.8</targetJdk>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 	</properties>
@@ -51,70 +51,13 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-checkstyle-plugin
-										</artifactId>
-										<versionRange>
-											[2.16,)
-										</versionRange>
-										<goals>
-											<goal>
-												checkstyle-aggregate
-											</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-pmd-plugin
-										</artifactId>
-										<versionRange>
-											[3.5,)
-										</versionRange>
-										<goals>
-											<goal>pmd</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<dependencies>
 		<dependency>
 			<groupId>eu.printingin3d.javascad</groupId>
 			<artifactId>javascad</artifactId>
-			<version>0.9.1.0</version>
+			<version>0.9.1.1</version>
 		</dependency>
 	</dependencies>
 </project>

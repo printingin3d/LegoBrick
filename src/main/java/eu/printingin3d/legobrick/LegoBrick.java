@@ -10,11 +10,12 @@ import eu.printingin3d.javascad.enums.Side;
 import eu.printingin3d.javascad.models.Abstract3dModel;
 import eu.printingin3d.javascad.models.Cube;
 import eu.printingin3d.javascad.models.Cylinder;
+import eu.printingin3d.javascad.models.Extendable3dModel;
 import eu.printingin3d.javascad.tranzitions.Difference;
-import eu.printingin3d.javascad.tranzitions.Union;
 
-public class LegoBrick extends Union {
-	private static final double ONE_SEGMENT_WIDTH = 8.0;
+public class LegoBrick extends Extendable3dModel {
+	public static final double ONE_SEGMENT_WIDTH = 8.0;
+	
 	private static final double HEIGHT = 9.6;
 	private static final double HORIZONTAL_GAP = 2*0.1;
 	private static final double WALL_THICKNESS = 1.2;
@@ -28,17 +29,21 @@ public class LegoBrick extends Union {
 	private static final double STABILIZER_THICKNESS = 0.8;
 	private static final double STABILIZER_HEIGHT = 7.0;
 	
+	private final int xSize;
+	private final int ySize;
+	
 	public LegoBrick(int xSize, int ySize) {
-		super(getModels(xSize, ySize));
-	}
-
-	private static List<Abstract3dModel> getModels(int xSize, int ySize) {
-		List<Abstract3dModel> models = new ArrayList<>();
+		this.xSize = xSize;
+		this.ySize = ySize;
+		
 		Abstract3dModel base = getBase(xSize, ySize);
-		models.add(base);
-		models.add(addAxles(base, xSize, ySize));
-		models.add(getKnobs(base, xSize, ySize));
-		return models;
+		this.baseModel = base.addModel(addAxles(base, xSize, ySize))
+				.addModel(getKnobs(base, xSize, ySize));
+	}
+	
+	@Override
+	protected Abstract3dModel innerCloneModel() {
+		return new LegoBrick(xSize, ySize);
 	}
 
 	private static Abstract3dModel getBase(int xSize, int ySize) {
@@ -80,6 +85,9 @@ public class LegoBrick extends Union {
 	private static Abstract3dModel addAxles(Abstract3dModel base, int xSize, int ySize) {
 		List<Coords3d> moves = new ArrayList<>();
 		if (xSize==1) {
+			if (ySize==1) {
+				return null;
+			}
 			for (int y=0;y<ySize-1;y++) {
 				moves.add(Coords3d.yOnly((y-(ySize-2.0)/2.0)*ONE_SEGMENT_WIDTH));
 			}
