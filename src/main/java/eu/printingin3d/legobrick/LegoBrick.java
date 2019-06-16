@@ -47,6 +47,16 @@ public class LegoBrick extends Extendable3dModel {
 	}
 
 	private static Abstract3dModel getBase(int xSize, int ySize) {
+	    if (xSize==1 || ySize==1) {
+	        return new Cube(new Dims3d(ONE_SEGMENT_WIDTH*xSize-HORIZONTAL_GAP, ONE_SEGMENT_WIDTH*ySize-HORIZONTAL_GAP, HEIGHT))
+                    .subtractModel(
+                        new Cube(new Dims3d(
+                                ONE_SEGMENT_WIDTH*xSize-HORIZONTAL_GAP-(WALL_THICKNESS+THING_THICKNESS)*2, 
+                                ONE_SEGMENT_WIDTH*ySize-HORIZONTAL_GAP-(WALL_THICKNESS+THING_THICKNESS)*2, 
+                                HEIGHT-WALL_THICKNESS)).move(Coords3d.zOnly(-WALL_THICKNESS))                     
+                );
+	    }	    
+	    
 		Abstract3dModel base = 
 				new Cube(new Dims3d(ONE_SEGMENT_WIDTH*xSize-HORIZONTAL_GAP, ONE_SEGMENT_WIDTH*ySize-HORIZONTAL_GAP, HEIGHT))
 					.subtractModel(
