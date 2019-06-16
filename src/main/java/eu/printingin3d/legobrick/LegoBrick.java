@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.printingin3d.javascad.basic.Radius;
+import eu.printingin3d.javascad.coords.Angles3d;
 import eu.printingin3d.javascad.coords.Coords3d;
 import eu.printingin3d.javascad.coords.Dims3d;
 import eu.printingin3d.javascad.enums.Side;
@@ -22,6 +23,7 @@ public class LegoBrick extends Extendable3dModel {
 	private static final Radius AXLE_INNER_RADIUS = Radius.fromDiameter(4.8);
 	private static final Radius AXLE_OUTER_RADIUS = Radius.fromDiameter(6.51);
 	private static final Radius AXLE_ONE_RADIUS = Radius.fromDiameter(3.0);
+	private static final Radius AXLE_ONE_RADIUS_HOLE = Radius.fromDiameter(1.0);
 	private static final Radius KNOB_RADIUS = Radius.fromDiameter(4.78);
 	private static final double KNOB_HEIGTH = 1.8;
 	private static final double THING_THICKNESS = 0.3;
@@ -107,7 +109,7 @@ public class LegoBrick extends Extendable3dModel {
 			for (int x=0;x<xSize-1;x++) {
 				moves.add(Coords3d.xOnly((x-(xSize-2.0)/2.0)*ONE_SEGMENT_WIDTH));
 			}
-			return getAxleOne().moves(moves);
+			return getAxleOne().rotate(Angles3d.ROTATE_MINUS_Z).moves(moves);
 		}
 		else {		
 			for (int x=0;x<xSize-1;x++) {
@@ -171,6 +173,8 @@ public class LegoBrick extends Extendable3dModel {
 	}
 	
 	private static Abstract3dModel getAxleOne() {
-		return new Cylinder(HEIGHT, AXLE_ONE_RADIUS);
+		return new Cylinder(HEIGHT, AXLE_ONE_RADIUS)
+		        .addModel(new Cube(new Dims3d(ONE_SEGMENT_WIDTH-WALL_THICKNESS, STABILIZER_THICKNESS, STABILIZER_HEIGHT)))
+		        .subtractModel(new Cylinder(HEIGHT+1, AXLE_ONE_RADIUS_HOLE));
 	}
 }
